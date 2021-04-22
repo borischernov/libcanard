@@ -452,6 +452,11 @@ const CanardFrame* canardTxPeek(const CanardInstance* const ins);
 /// The time complexity is constant. This function does not invoke the dynamic memory manager.
 void canardTxPop(CanardInstance* const ins);
 
+/// This function is similar to canardTxPop() but instead of the top element it operates on specific queue element
+/// This allows to overcome the prioritized transmission queue limitation mentioned for canardTxPop. This allows
+/// using libcanard in single-threaded applications.
+void canardTxRemove(CanardInstance* const ins, const CanardFrame* frame);
+    
 /// This function implements the transfer reassembly logic. It accepts a transport frame, locates the appropriate
 /// subscription state, and, if found, updates it. If the frame completed a transfer, the return value is 1 (one)
 /// and the out_transfer pointer is populated with the parameters of the newly reassembled transfer. The transfer
