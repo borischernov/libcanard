@@ -1020,6 +1020,16 @@ void canardTxPop(CanardInstance* const ins)
     }
 }
 
+void canardTxRemove(CanardInstance* const ins, const CanardFrame* frame) {
+    CanardInternalTxQueueItem **item_ptr;
+    for (item_ptr = &ins->_tx_queue; *item_ptr; item_ptr = &((*item_ptr)->next)) {
+        if (*item_ptr == (CanardInternalTxQueueItem *)frame) {
+            *item_ptr = (*item_ptr)->next;
+            return;
+        }
+    }
+}
+
 int8_t canardRxAccept(CanardInstance* const    ins,
                       const CanardFrame* const frame,
                       const uint8_t            redundant_transport_index,
